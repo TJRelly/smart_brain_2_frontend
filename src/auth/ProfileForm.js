@@ -45,12 +45,11 @@ const ProfileForm = ({ deleteUser, updateUser }) => {
         }
 
         try {
-            console.log(currentUser.id, profileData);
             const result = await updateUser(currentUser.id, profileData);
             if (result.success) {
                 setSaveConfirmed(true);
             } else {
-                throw new Error(result.errors);
+                throw new Error (result.errors)
             }
         } catch (err) {
             setFormErrors([err.message]);

@@ -64,7 +64,7 @@ class SmartApi {
 
     static async deleteProfile(id, data) {
         let res = await this.request(`users/${id}`, data, "delete");
-        console.log(res);
+        
         return res.message;
     }
 

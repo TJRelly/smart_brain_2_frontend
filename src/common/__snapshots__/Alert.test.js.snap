@@ -3,16 +3,16 @@
 exports[`matches snapshot for danger 1`] = `
 <DocumentFragment>
   <div
-    class="alert alert-danger"
+    class="p-4 my-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
     role="alert"
   >
     <p
-      class="mb-0 small"
+      class="mb-0 small pb-2"
     >
       Everything is broken
     </p>
     <p
-      class="mb-0 small"
+      class="mb-0 small pb-2"
     >
       Run for the hills
     </p>
@@ -23,11 +23,11 @@ exports[`matches snapshot for danger 1`] = `
 exports[`matches snapshot for success 1`] = `
 <DocumentFragment>
   <div
-    class="alert alert-success"
+    class="p-4 my-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
     role="alert"
   >
     <p
-      class="mb-0 small"
+      class="mb-0 small pb-2"
     >
       Everything is awesome!
     </p>
