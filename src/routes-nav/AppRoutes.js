@@ -4,8 +4,8 @@ import NotFound from "../components/notFound/NotFound";
 import ImageLinkForm from "../components/imageLinkForm/ImageLinkForm";
 import LoginForm from "../auth/LoginForm";
 import RegisterForm from "../auth/RegisterForm";
-// import ProfileForm from "../profiles/ProfileForm";
-// import PrivateRoute from "./PrivateRoute";
+import ProfileForm from "../auth/ProfileForm";
+import PrivateRoutes from "../common/PrivateRoute";
 
 /** Site-wide routes.
  *
@@ -15,21 +15,43 @@ import RegisterForm from "../auth/RegisterForm";
  * Visiting a non-existent route redirects to the homepage.
  */
 
-const AppRoutes = ({ login, signup }) => {
-  console.debug("Routes", { login: typeof login, signup: typeof signup });
+const AppRoutes = ({
+    login,
+    signup,
+    deleteUser,
+    handleImage,
+    handleIncrement,
+}) => {
+    console.debug("Routes", { login: typeof login, signup: typeof signup });
 
-  return (
-    <div className="pt-5">
-      <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/detect" element={<ImageLinkForm />}/>
-        <Route path="/login" element={<LoginForm login={login} />} />
-        <Route path="/register" element={<RegisterForm signup={signup} />} />
-        {/* <Route path="/profile" element={<ProfileForm />} /> */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </div>
-  );
+    return (
+        <div className="pt-5">
+            <Routes>
+                <Route path="/" element={<Homepage />} />
+                <Route path="/login" element={<LoginForm login={login} />} />
+                <Route
+                    path="/register"
+                    element={<RegisterForm signup={signup} />}
+                />
+                <Route element={<PrivateRoutes />}>
+                    <Route
+                        path="/detect"
+                        element={
+                            <ImageLinkForm
+                                handleImage={handleImage}
+                                handleIncrement={handleIncrement}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/profile"
+                        element={<ProfileForm deleteUser={deleteUser} />}
+                    />
+                </Route>
+                <Route path="*" element={<NotFound />} />
+            </Routes>
+        </div>
+    );
 };
 
 export default AppRoutes;

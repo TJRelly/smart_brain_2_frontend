@@ -1,11 +1,65 @@
 import "./LoginForm.css";
 import { Link } from "react-router-dom";
 // import LoadingScreen from "react-loading-screen"
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Alert from "../common/Alert";
 
-const RegisterForm = () => {
+/** Signup form.
+ *
+ * Shows form and manages update to state on changes.
+ * On submission:
+ * - calls signup function prop
+ * - redirects to /companies route
+ *
+ * Routes -> SignupForm -> Alert
+ * Routed as /signup
+ */
+
+const RegisterForm = ({ signup }) => {
     const loading = false;
+    const navigateTo = useNavigate();
+    const [formData, setFormData] = useState({
+        username: "",
+        password: "",
+        email: "",
+    });
+    const [formErrors, setFormErrors] = useState([]);
+
+    console.debug(
+        "SignupForm",
+        "signup=",
+        typeof signup,
+        "formData=",
+        formData,
+        "formErrors=",
+        formErrors
+    );
+
+    /** Handle form submit:
+     *
+     * Calls login func prop and, if successful, redirect to /detect.
+     */
+
+    async function handleSubmit(evt) {
+        evt.preventDefault();
+        let result = await signup(formData);
+        if (result.success) {
+            navigateTo("/detect");
+        } else {
+            setFormErrors(result.errors);
+        }
+    }
+
+    /** Update form data field */
+    function handleChange(evt) {
+        const { name, value } = evt.target;
+        setFormData((data) => ({ ...data, [name]: value }));
+    }
+
     return (
         <form
+            onSubmit={handleSubmit}
             id="signin-form"
             className="bg-grey-lighter flex flex-col sm:w-full h-auto m-auto"
         >
@@ -16,14 +70,16 @@ const RegisterForm = () => {
                     </h1>
 
                     <input
+                        onChange={handleChange}
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded mb-4"
-                        name="user-id"
+                        name="username"
                         placeholder="Name"
                         autoComplete="on"
                     />
 
                     <input
+                        onChange={handleChange}
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded mb-4"
                         name="email"
@@ -32,12 +88,17 @@ const RegisterForm = () => {
                     />
 
                     <input
+                        onChange={handleChange}
                         type="password"
                         className="block border border-grey-light w-full p-3 rounded mb-4"
                         name="password"
                         placeholder="Password"
                         autoComplete="on"
                     />
+
+                    {formErrors.length ? (
+                        <Alert type="danger" messages={formErrors} />
+                    ) : null}
 
                     <button
                         id="submit-form"
@@ -55,10 +116,7 @@ const RegisterForm = () => {
                 <div className="text-grey-dark mt-6 bg-white px-2 py-5 rounded-lg shadow-md text-black w-full">
                     Already have an account?
                     <Link to="/login">
-                        <button
-                            className="text-lg no-underline border-b text-blue-700 transition duration-200 hover:border-blue-700 text-blue ml-2"
-                            href="../login/"
-                        >
+                        <button className="text-lg no-underline border-b text-blue-700 transition duration-200 hover:border-blue-700 text-blue ml-2">
                             Log in.
                         </button>
                     </Link>
