@@ -21,6 +21,7 @@ const AppRoutes = ({
     deleteUser,
     handleImage,
     handleIncrement,
+    updateUser,
 }) => {
     console.debug("Routes", { login: typeof login, signup: typeof signup });
 
@@ -45,7 +46,12 @@ const AppRoutes = ({
                     />
                     <Route
                         path="/profile"
-                        element={<ProfileForm deleteUser={deleteUser} />}
+                        element={
+                            <ProfileForm
+                                deleteUser={deleteUser}
+                                updateUser={updateUser}
+                            />
+                        }
                     />
                 </Route>
                 <Route path="*" element={<NotFound />} />

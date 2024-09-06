@@ -48,24 +48,28 @@ function App() {
                         );
                         setCurrentUser(currentUser);
                         setEntries(currentUser.entries);
-                        setInfoLoaded(true); // Set infoLoaded to true only after currentUser is set
                     } catch (err) {
                         console.error("App loadUserInfo: problem loading", err);
                         setCurrentUser(null);
-                        setInfoLoaded(true); // Even if there's an error, set infoLoaded to true
                     }
-                } else {
-                    setInfoLoaded(true); // If no token, set infoLoaded to true immediately
                 }
+                setInfoLoaded(true);
             }
 
             // set infoLoaded to false while async getCurrentUser runs; once the
             // data is fetched (or even if an error happens!), this will be set back
-            // to true to control the spinner.
+            // to false to control the spinner.
+            setInfoLoaded(false);
             getCurrentUser();
         },
-        [token]
+        [token, setCurrentUser]
     );
+
+    /** Handles site-wide logout. */
+    function logout() {
+        setCurrentUser(null);
+        setToken(null);
+    }
 
     /** Handles site-wide signup.
      *
@@ -76,8 +80,11 @@ function App() {
     async function signup(signupData) {
         try {
             let token = await SmartApi.signup(signupData);
-            setToken(token);
-            return { success: true };
+            if (token) {
+                setInfoLoaded(false);
+                setToken(token);
+                return { success: true };
+            }
         } catch (errors) {
             console.error("signup failed", errors);
             return { success: false, errors };
@@ -91,18 +98,15 @@ function App() {
     async function login(loginData) {
         try {
             let token = await SmartApi.login(loginData);
-            setToken(token);
-            return { success: true };
+            if (token) {
+                setInfoLoaded(false);
+                setToken(token);
+                return { success: true };
+            }
         } catch (errors) {
             console.error("login failed", errors);
             return { success: false, errors };
         }
-    }
-
-    /** Handles site-wide logout. */
-    function logout() {
-        setCurrentUser(null);
-        setToken(null);
     }
 
     // Delete a user
@@ -131,6 +135,19 @@ function App() {
         }
     }
 
+    async function updateUser(id, data) {
+        try {
+            let result = await SmartApi.updateProfile(id, data);
+            if (result) {
+                setCurrentUser(result);
+                return { success: true };
+            }
+        } catch (errors) {
+            console.error("update failed", errors);
+            return { success: false, errors };
+        }
+    }
+
     if (!infoLoaded) return <LoadingSpinner loading={infoLoaded} />;
 
     return (
@@ -146,6 +163,7 @@ function App() {
                         deleteUser={deleteUser}
                         handleImage={handleImage}
                         handleIncrement={handleIncrement}
+                        updateUser={updateUser}
                     />
                 </div>
             </UserContext.Provider>

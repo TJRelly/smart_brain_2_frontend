@@ -2,12 +2,12 @@ import "./LoginForm.css";
 import { Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import Alert from "../common/Alert";
-import SmartApi from "../api/api";
+// import SmartApi from "../api/api";
 import UserContext from "./UserContext";
 import useTimedMessage from "../hooks/useTimedMessage";
 
-const ProfileForm = ({ deleteUser }) => {
-    const { currentUser, setCurrentUser } = useContext(UserContext);
+const ProfileForm = ({ deleteUser, updateUser }) => {
+    const { currentUser } = useContext(UserContext);
     const [formData, setFormData] = useState({
         email: currentUser.email,
         username: currentUser.username,
@@ -39,31 +39,26 @@ const ProfileForm = ({ deleteUser }) => {
     async function handleSubmit(evt) {
         evt.preventDefault();
 
-        let profileData = {
-            username: formData.username,
-            email: formData.email,
-            password: formData.password,
-        };
-
-        let updatedUser;
+        let profileData = {};
+        for (let data in formData) {
+            if (formData[data].length) profileData[data] = formData[data];
+        }
 
         try {
             console.log(currentUser.id, profileData);
-            updatedUser = await SmartApi.saveProfile(
-                currentUser.id,
-                profileData
-            );
-        } catch (errors) {
-            setFormErrors(errors);
+            const result = await updateUser(currentUser.id, profileData);
+            if (result.success) {
+                setSaveConfirmed(true);
+            } else {
+                throw new Error(result.errors);
+            }
+        } catch (err) {
+            setFormErrors([err.message]);
             return;
         }
 
         setFormData((f) => ({ ...f, password: "" }));
         setFormErrors([]);
-        setSaveConfirmed(true);
-
-        // trigger reloading of user information throughout the site
-        setCurrentUser(updatedUser);
     }
 
     /** Handle form data changing */
@@ -92,7 +87,11 @@ const ProfileForm = ({ deleteUser }) => {
                 >
                     <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
                         <div className="px-6 py-8 rounded shadow-xl text-black w-full backdrop-blur-sm">
-                            <h1 className="text-white mb-8 text-3xl text-center">
+                            <h1 className="text-white mb-0 text-3xl text-center">
+                                {" "}
+                                - Hello, {currentUser.username} -{" "}
+                            </h1>
+                            <h1 className="text-white mb-8 mt-0 text-xl text-center">
                                 Update Account
                             </h1>
 
@@ -133,23 +132,25 @@ const ProfileForm = ({ deleteUser }) => {
                             >
                                 Save
                             </button>
-                            <p className="development">
-                                {" "}
-                                - Thank you for trying our app! -{" "}
-                                <span className="py-2">
+                            <div className="development">
+                                <span> - Thank you for trying our app! - </span>
+                                <span>
                                     {saveConfirmed ? (
                                         <Alert
                                             type="success"
                                             messages={["Updated successfully."]}
                                         />
                                     ) : null}
-                                </span>
-                            </p>
-                        </div>
 
-                        {formErrors.length ? (
-                            <Alert type="danger" messages={formErrors} />
-                        ) : null}
+                                    {formErrors.length ? (
+                                        <Alert
+                                            type="danger"
+                                            messages={formErrors}
+                                        />
+                                    ) : null}
+                                </span>
+                            </div>
+                        </div>
 
                         <div className="text-grey-dark mt-6 m-2 bg-white px-2 py-5 rounded-lg shadow-md text-black w-full">
                             <p>No longer need your account?</p>

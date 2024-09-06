@@ -14,6 +14,7 @@ const ImageLinkForm = ({ handleImage, handleIncrement }) => {
     const [formData, setFormData] = useState({ input: "" });
     const [formErrors, setFormErrors] = useState([]);
     const [boxes, setBoxes] = useState([]);
+    const [imageUrl, setImageUrl] = useState(null);
 
     console.debug(
         "ImageLinkForm",
@@ -35,20 +36,22 @@ const ImageLinkForm = ({ handleImage, handleIncrement }) => {
     async function handleSubmit(evt) {
         if (evt) evt.preventDefault();
         try {
+            setBoxes([]);
+            setImageUrl(formData.input);
             let result = await handleImage(formData);
             if (result.data) {
                 const faceBoxes = calculateFaceLocation(result.data);
                 displayFaceBox(faceBoxes);
-                // increment entries
                 handleIncrement({ id: currentUser.id });
-                setEntries((entries) => entries + 1);
-                setFormErrors([]);
+                setEntries((entries) => entries + 1); // increment entries
+                setFormErrors([]); // reset form errors (if any)
             } else {
                 setFormErrors(["Invalid url, please try again"]);
             }
         } catch (error) {
             setFormErrors([error.message]); // Set the error message
         }
+        setFormData({ input: "" });
     }
 
     /** Update form data field */
@@ -101,6 +104,7 @@ const ImageLinkForm = ({ handleImage, handleIncrement }) => {
                             placeholder="Copy image address here..."
                             className="p-2 mr-1 text-gray-600 w-3/4"
                             onChange={handleChange}
+                            value={formData.input}
                             autoComplete="on"
                         />
                         {/* Detect Button */}
@@ -117,8 +121,8 @@ const ImageLinkForm = ({ handleImage, handleIncrement }) => {
                         </div>
                     ) : null}
                 </div>
+                <FaceRecognition boxes={boxes} imageUrl={imageUrl} />
             </form>
-            <FaceRecognition boxes={boxes} imageUrl={formData.input} />
         </div>
     );
 };

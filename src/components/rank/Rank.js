@@ -2,7 +2,8 @@ const Rank = ({name, entries}) => {
     return (
         <div>
             <div className="white f3 w-fit m-auto backdrop-blur-sm">
-                {`Hello ${name}, your current entry count is:`}
+               <p className="text-3xl">Hello, {name}</p>
+               <p>Your current entry count is:</p>
             </div>
             <div className="white f1 w-fit m-auto backdrop-blur-sm">
                 {entries}

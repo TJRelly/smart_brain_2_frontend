@@ -55,7 +55,7 @@ class SmartApi {
 
     /** Save user profile page. */
 
-    static async saveProfile(id, data) {
+    static async updateProfile(id, data) {
         let res = await this.request(`users/${id}`, data, "patch");
         return res.user;
     }

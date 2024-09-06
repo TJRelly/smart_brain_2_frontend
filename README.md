@@ -1,70 +1,44 @@
-# Getting Started with Create React App
+# Smart Brain - Face-Detection App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Goal
+The goal is to create a user-friendly, engaging web app that goes beyond simple facial recognition by integrating image tracking, user management, and secure data handling to provide a comprehensive user experience.
 
-## Available Scripts
+## Project Description
+The Smart Brain face-detection app is a full-stack web application that leverages AI and facial recognition technology to detect multiple faces in uploaded images. This project demonstrates practical use of image recognition systems, focusing on user account management, secure authentication, and database interaction. The skills used in this project can help companies implement image processing solutions, user-centric applications, and secure data handling, all essential components in modern web applications.
 
-In the project directory, you can run:
+## Tech Stack
+- **Frontend**: HTML, CSS, JavaScript, React
+- **Backend**: Node.js, Express
+- **Database**: PostgreSQL
+- **API**: Clarifai API for facial recognition
+- **Authentication**: JWT, bcrypt for password encryption
 
-### `npm start`
+## Database Schema
+- **Users**: Stores user account details and preferences.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Functionality
+- Users can register, sign in, and upload images for facial recognition.
+- Detects and highlights multiple faces in uploaded images using the Clarifai API.
+- Profile management allows users to view and edit their profile and track image history.
+- Demo account available for exploration and testing without registration.
+- Loading screen enhances user experience during API requests.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Stretch Goals
+- Real-time face detection using webcam or live video feeds.
+- Integration with social media platforms for easy sharing of face recognition results.
+- Custom image filters based on user preferences.
 
-### `npm test`
+## User Flow
+1. **Registration/Login**: Users sign up or log in using secure credentials.
+2. **Upload Image**: Users upload an image, and the app processes it using the Clarifai API to detect faces.
+3. **Profile Management**: Users can update their profile and review previous uploads.
+4. **Demo Mode**: A demo account is available for new users to explore the full functionality without creating an account.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## API Challenges
+- Addressing data inconsistencies and deprecated components in the Clarifai API.
+- Implementing robust error handling for user authentication and image processing.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Future Features
+- **Webcam Integration**: Real-time face detection for enhanced user interaction.
+- **User-Generated Content**: Allow users to share and comment on face detection results, enhancing engagement.
+- **Images Database**: Tracks images uploaded by users and stores recognition results.

@@ -27,13 +27,18 @@ const LoginForm = ({ login }) => {
      *
      * Calls login func prop and, if successful, redirect to /companies.
      */
+
     async function handleSubmit(evt) {
         if (evt) evt.preventDefault();
-        let result = await login(formData);
-        if (result.success) {
-            navigateTo("/detect");
-        } else {
-            setFormErrors(result.errors);
+        try {
+            let result = await login(formData);
+            if (result.success) {
+                navigateTo("/detect");
+            } else {
+                setFormErrors(result.errors);
+            }
+        } catch (err) {
+            setFormErrors([err.message]);
         }
     }
 
@@ -90,6 +95,7 @@ const LoginForm = ({ login }) => {
                         placeholder="Password"
                         autoComplete="on"
                     />
+
                     {formErrors.length ? (
                         <Alert type="danger" messages={formErrors} />
                     ) : null}
@@ -127,4 +133,3 @@ const LoginForm = ({ login }) => {
 };
 
 export default LoginForm;
-
