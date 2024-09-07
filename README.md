@@ -1,7 +1,8 @@
-# Smart Brain - Face-Detection App
+# [Smart Brain - Face-Detection App](smart-brain-2-frontend.vercel.app)
 
 ## Goal
 The goal is to create a user-friendly, engaging web app that goes beyond simple facial recognition by integrating image tracking, user management, and secure data handling to provide a comprehensive user experience.
+Check it out here: [Smart Brain Live Site](smart-brain-2-frontend.vercel.app)
 
 ## Project Description
 The Smart Brain face-detection app is a full-stack web application that leverages AI and facial recognition technology to detect multiple faces in uploaded images. This project demonstrates practical use of image recognition systems, focusing on user account management, secure authentication, and database interaction. The skills used in this project can help companies implement image processing solutions, user-centric applications, and secure data handling, all essential components in modern web applications.
