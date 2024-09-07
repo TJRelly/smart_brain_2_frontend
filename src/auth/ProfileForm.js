@@ -15,6 +15,7 @@ const ProfileForm = ({ deleteUser, updateUser }) => {
 
     const [formErrors, setFormErrors] = useState([]);
     const [saveConfirmed, setSaveConfirmed] = useTimedMessage();
+    const [isLoading, setIsLoading] = useState(false);
 
     console.debug(
         "ProfileForm",
@@ -45,17 +46,19 @@ const ProfileForm = ({ deleteUser, updateUser }) => {
         }
 
         try {
+            setIsLoading(true);
             const result = await updateUser(currentUser.id, profileData);
             if (result.success) {
                 setSaveConfirmed(true);
             } else {
-                throw new Error (result.errors)
+                throw new Error(result.errors);
             }
         } catch (err) {
+            setIsLoading(false);
             setFormErrors([err.message]);
             return;
         }
-
+        setIsLoading(false);
         setFormData((f) => ({ ...f, password: "" }));
         setFormErrors([]);
     }
@@ -129,7 +132,11 @@ const ProfileForm = ({ deleteUser, updateUser }) => {
                                 type="submit"
                                 className="white w-full text-center py-3 rounded bg-blue-600 text-gray-800 hover:text-white focus:text-white hover:bg-green-dark focus:outline-none my-1"
                             >
-                                Save
+                                {isLoading ? (
+                                    <>Saving your data . . .</>
+                                ) : (
+                                    <>Save</>
+                                )}
                             </button>
                             <div className="development">
                                 <span> - Thank you for trying our app! - </span>

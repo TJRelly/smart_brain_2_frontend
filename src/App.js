@@ -37,6 +37,8 @@ function App() {
         function loadUserInfo() {
             console.debug("App useEffect loadUserInfo", "token=", token);
 
+            setInfoLoaded(false);
+
             async function getCurrentUser() {
                 if (token) {
                     try {
@@ -148,7 +150,7 @@ function App() {
         }
     }
 
-    if (!infoLoaded) return <LoadingSpinner loading={infoLoaded} />;
+    if (!infoLoaded) return <LoadingSpinner loading={true} />;
 
     return (
         <BrowserRouter>

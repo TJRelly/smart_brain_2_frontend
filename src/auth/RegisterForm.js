@@ -17,7 +17,6 @@ import Alert from "../common/Alert";
  */
 
 const RegisterForm = ({ signup }) => {
-    const loading = false;
     const navigateTo = useNavigate();
     const [formData, setFormData] = useState({
         username: "",
@@ -25,6 +24,7 @@ const RegisterForm = ({ signup }) => {
         email: "",
     });
     const [formErrors, setFormErrors] = useState([]);
+    const [isLoading, setIsLoading] = useState(false)
 
     console.debug(
         "SignupForm",
@@ -43,12 +43,15 @@ const RegisterForm = ({ signup }) => {
 
     async function handleSubmit(evt) {
         evt.preventDefault();
+        setIsLoading(true)
         let result = await signup(formData);
         if (result.success) {
             navigateTo("/detect");
         } else {
+            setIsLoading(false)
             setFormErrors(result.errors);
         }
+        setIsLoading(false)
     }
 
     /** Update form data field */
@@ -105,7 +108,7 @@ const RegisterForm = ({ signup }) => {
                         type="submit"
                         className="white w-full text-center py-3 rounded bg-blue-600 text-gray-800 hover:text-white focus:text-white hover:bg-green-dark focus:outline-none my-1"
                     >
-                        {loading ? <>Signing in . . .</> : <>Sign up</>}
+                        {isLoading ? <>Signing in . . .</> : <>Sign up</>}
                     </button>
                     <p className="development">
                         {" "}

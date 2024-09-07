@@ -12,6 +12,7 @@ const LoginForm = ({ login }) => {
     });
     const [formErrors, setFormErrors] = useState([]);
     const [isDemoLogin, setIsDemoLogin] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     console.debug(
         "LoginForm",
@@ -31,6 +32,7 @@ const LoginForm = ({ login }) => {
     async function handleSubmit(evt) {
         if (evt) evt.preventDefault();
         try {
+            setIsLoading(true);
             let result = await login(formData);
             if (result.success) {
                 navigateTo("/detect");
@@ -38,8 +40,10 @@ const LoginForm = ({ login }) => {
                 setFormErrors(result.errors);
             }
         } catch (err) {
+            setIsLoading(false);
             setFormErrors([err.message]);
         }
+        setIsLoading(false);
     }
 
     /** Update form data field */
@@ -105,7 +109,7 @@ const LoginForm = ({ login }) => {
                         type="submit"
                         className="white w-full text-center py-3 rounded bg-blue-600 text-gray-800 hover:text-white focus:text-white focus:outline-none my-2 tracking-wide"
                     >
-                        Log in
+                        {isLoading ? <>Logging you in . . .</> : <>Log in</>}
                     </button>
 
                     <p className="development">- or -</p>
